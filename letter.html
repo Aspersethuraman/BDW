@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffedf3">
+  <title>A birthday letter for Emlin Mercy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body class="inner-page">
+  <div class="page-shell" id="letter-page-content">
+    <header class="inner-header">
+      <a class="wordmark" href="index.html"><span class="wordmark-star" aria-hidden="true">✳</span> A day for you</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="letter.html" aria-current="page">Birthday letter</a>
+      </nav>
+    </header>
+    <main class="letter-page">
+      <header class="letter-intro">
+        <p class="section-kicker">A wish for Emlin Mercy</p>
+        <h1>A little something<br>from the heart.</h1>
+        <p>Some words are easier to write down. This one is just for you.</p>
+      </header>
+      <section class="envelope-card" aria-label="A sealed birthday letter">
+        <div class="envelope-art" aria-hidden="true">
+          <div class="envelope-back"></div>
+          <div class="envelope-front"></div>
+          <div class="envelope-flap"></div>
+          <div class="envelope-seal"><span>♥</span></div>
+        </div>
+        <p class="envelope-prompt">A note, written just for you.</p>
+        <button class="open-letter-button" type="button" aria-haspopup="dialog" aria-controls="birthday-letter">
+          Open your birthday note <span aria-hidden="true">→</span>
+        </button>
+      </section>
+      <div class="memories-return"><a class="page-return" href="index.html"><span aria-hidden="true">←</span> Back to the birthday page</a></div>
+    </main>
+    <footer class="birthday-footer"><p>Made for Emlin’s very special day</p><span class="footer-star" aria-hidden="true">✳</span><p>Save a little cake for later.</p></footer>
+  </div>
+
+  <div class="letter-overlay" id="birthday-letter-overlay" hidden>
+    <div class="letter-backdrop" data-close-letter></div>
+    <article class="letter-dialog" id="birthday-letter" role="dialog" aria-modal="true" aria-labelledby="letter-title" tabindex="-1">
+      <div class="letter-dialog-top">
+        <span>A little note</span>
+        <button class="close-letter-button" type="button" aria-label="Close birthday note">Close <span aria-hidden="true">×</span></button>
+      </div>
+      <div class="letter-sheet">
+        <h2 id="letter-title">For Emlin, from my heart</h2>
+        <p class="letter-message">Happy Birthday to the person I love silently. ❤️🎂
+
+You may never understand how special you are to me, and maybe you'll never know how many times I've smiled just thinking about you. I don't know whether I'll ever become someone special in your life, but you'll always be special in mine. I ask nothing from you, only that life gives you all the happiness you deserve. Even if my love remains unspoken and one-sided, my wishes for you will always come from the deepest part of my heart. Happy Birthday, my unspoken love. 🥹💔❤️</p>
+        <span class="letter-signature">With so much love, today and always</span>
+      </div>
+    </article>
+  </div>
+  <script>
+    const pageContent = document.querySelector('#letter-page-content');
+    const envelopeCard = document.querySelector('.envelope-card');
+    const openButton = document.querySelector('.open-letter-button');
+    const overlay = document.querySelector('#birthday-letter-overlay');
+    const dialog = document.querySelector('#birthday-letter');
+    const closeButton = document.querySelector('.close-letter-button');
+    const motionReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function openLetter() {
+      envelopeCard.classList.add('is-opening');
+      overlay.hidden = false;
+      pageContent.inert = true;
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => overlay.classList.add('is-open'));
+      window.setTimeout(() => closeButton.focus(), motionReduced.matches ? 0 : 450);
+    }
+
+    function closeLetter() {
+      overlay.classList.remove('is-open');
+      pageContent.inert = false;
+      document.body.style.removeProperty('overflow');
+      openButton.focus();
+      window.setTimeout(() => {
+        overlay.hidden = true;
+        envelopeCard.classList.remove('is-opening');
+      }, motionReduced.matches ? 0 : 550);
+    }
+
+    openButton.addEventListener('click', openLetter);
+    closeButton.addEventListener('click', closeLetter);
+    overlay.querySelector('[data-close-letter]').addEventListener('click', closeLetter);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !overlay.hidden) closeLetter();
+    });
+  </script>
+</body>
+</html>
